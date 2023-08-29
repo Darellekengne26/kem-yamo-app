@@ -110,12 +110,12 @@
     max-height: 200px;
     transition: .5s;
     /*height: 200px;*/
-    width: 200px;
+    width: 350px;
    /* width: 100%;*/
 }
 
 .navbar-brand img {
-    width: 250px;
+    width: 500px;
     height: 600px;
 
 }
@@ -751,12 +751,12 @@
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   justify-content: center;
 }
-.connexion .registration{
+/*.connexion .registration{
   display: none;
 }
 #check:checked ~ .registration{
   display: block;
-}
+}*/
 #check:checked ~ .login{
   display: none;
 }
@@ -820,6 +820,9 @@
   text-decoration: underline;
 }
 /*** End connexion ***/
+
+/*** Inscription ***/
+/*** End Inscription **/
 
 /*** Footer ***/
 .container-fluid{
