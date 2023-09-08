@@ -1,8 +1,16 @@
 <?php
 
+use App\Http\Controllers\CompteController;
+use App\Http\Controllers\ConnexionController;
+use App\Http\Controllers\DeconnexionController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontController;
+use App\Http\Controllers\InscriptionController;
+use App\Http\Controllers\UsersController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +34,37 @@ use App\Http\Controllers\frontController;
     /*return View::make('pages/about');
 });*/
 
+// email verification
+
+// on affiche une page d'avertissement au cas ou l'user n'a pas verifier son email
+/*Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice'); 
+
+//on traite la verification de l'email
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+//en cas de non reception de l'email de verification
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send'); */
+
+//end email verification
+
+// pages
+
 Route::get('/',[frontController::class, 'index'])->name("index");
+
+Auth::routes([
+    'verify' => true
+]);
+
 Route::get('/a propos',[frontController::class, 'a_propos'])->name("a_propos");
 Route::get('/menu',[frontController::class, 'menu'])->name("menu");
 Route::get('/reservation',[frontController::class, 'reservation'])->name("reservation");
@@ -35,4 +73,29 @@ Route::get('/contact',[frontController::class, 'contact'])->name("contact");
 Route::get('/connexion',[frontController::class, 'connexion'])->name("connexion");
 Route::get('/commande',[frontController::class, 'commande'])->name("commande");
 
+Route::get('/inscription',[UsersController::class, 'register'])->name("register");
+Route::post('/inscription',[UsersController::class, 'handleRegistration'])->name("handleRegistration");
 
+Route::get('/connexion',[ConnexionController::class, 'login'])->name("login");
+Route::post('/connexion',[ConnexionController::class, 'handleLogin'])->name("handleLogin");
+
+Route::get('/dashboard',[ConnexionController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/deconnexion',[DeconnexionController::class, 'logout'])->name("logout");
+
+Route::get('/users',[UsersController::class, 'liste'])->name("liste");
+
+Route::get('/user/{id}', [UsersController::class, 'voir'])->name("voir");
+
+
+/*Route::get('/dashboard', function(){
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');*/
+
+
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

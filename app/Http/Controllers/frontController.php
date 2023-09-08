@@ -5,7 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 class frontController extends Controller
+
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+
     public function index()
     {
         return view('pages.welcome');
@@ -32,7 +38,7 @@ class frontController extends Controller
     }
     public function connexion()
     {
-        return view('pages.connexion');
+        return view('pages.users.connexion');
     }
     public function commande()
     {
