@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\createUserRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,10 @@ class UsersController extends Controller
         ]);
 
         $users->save();
+
+        event(new Registered($users));
+
+        auth()->login($users);
 
         return redirect()->back()->with('success', 'Votre compte a ete cree. Connectez vous.');
 

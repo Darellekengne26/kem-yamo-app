@@ -110,13 +110,13 @@
     max-height: 200px;
     transition: .5s;
     /*height: 200px;*/
-    width: 350px;
+    width: 250px;
    /* width: 100%;*/
 }
 
 .navbar-brand img {
-    width: 500px;
-    height: 600px;
+    width: 300px;
+    height: 400px;
 
 }
 

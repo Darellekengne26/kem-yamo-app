@@ -12,7 +12,7 @@ class frontController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-    public function index()
+    public function acceuil()
     {
         return view('pages.welcome');
     }

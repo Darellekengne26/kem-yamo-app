@@ -14,7 +14,7 @@
                 <a href="/reservation" class="nav-item nav-link">Reservation</a>
                 <a href="/conseil" class="nav-item nav-link">Conseil</a>
                 <a href="/contact" class="nav-item nav-link">Contact</a>
-                <a href="/dashboard" class="nav-item nav-link">Mon Compte{{-- {{ Auth::User()->id}} --}} </a>
+                <a href="/dashboard" class="nav-item nav-link">Mon Compte{{-- {{ Auth::User()->id}} --}}</a>
             </div>
             @if(Auth::check())
                 <a href="/deconnexion" class="btn btn-primary py-2 px-4">SE DECONNECTER</a>

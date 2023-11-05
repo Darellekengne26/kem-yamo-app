@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CompteController;
 use App\Http\Controllers\ConnexionController;
 use App\Http\Controllers\DeconnexionController;
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\VerificationController as ControllersVerificationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -59,11 +61,11 @@ Route::post('/email/verification-notification', function (Request $request) {
 
 // pages
 
-Route::get('/',[frontController::class, 'index'])->name("index");
+Route::get('/',[frontController::class, 'acceuil'])->name ("acceuil");
 
-Auth::routes([
+/*Auth::routes([
     'verify' => true
-]);
+]);*/
 
 Route::get('/a propos',[frontController::class, 'a_propos'])->name("a_propos");
 Route::get('/menu',[frontController::class, 'menu'])->name("menu");
@@ -81,6 +83,29 @@ Route::post('/connexion',[ConnexionController::class, 'handleLogin'])->name("han
 
 Route::get('/dashboard',[ConnexionController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::group(['middleware' => ['auth']], function(){
+
+    /**
+     * Verification Routes
+     */
+    Route::get('/email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
+    Route::post('/email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+    
+});  
+
+//only authenticated can access this group
+/*Route::group(['middleware' => ['auth']], function() {
+    //only verified account can access with this group
+    Route::group(['middleware' => ['verified']], function() {
+            /**
+             * Dashboard Routes
+             */
+            /*Route::get('/index', [DashboardController::class, 'index'])->name('Dashboard.index');
+    });
+});*/
+
+
 Route::get('/deconnexion',[DeconnexionController::class, 'logout'])->name("logout");
 
 Route::get('/users',[UsersController::class, 'liste'])->name("liste");
@@ -96,6 +121,6 @@ Route::get('/user/{id}', [UsersController::class, 'voir'])->name("voir");
 
 
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

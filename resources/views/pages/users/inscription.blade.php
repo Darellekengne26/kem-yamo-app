@@ -39,7 +39,7 @@
                   </form>
                   <div class="signup">
                     <span class="signup">Vous avez deja un compte?
-                     <label for="check" ><a href="/connexion"> Connecter</label>
+                     <label for="check" ><a href="/connexion">Se Connecter</label>
                     </span>
                   </div>
                 </div>
